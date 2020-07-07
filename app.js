@@ -34,6 +34,17 @@ function rolePrompt(role){
     }
 }
 
+function creatEmployee(name, id, email, role, special){
+    switch(role){
+        case "Engineer":
+            return new Engineer(name, id, email, special);
+        case "Intern":
+            return new Intern(name, id, email, special);
+        case "Manager":
+            return new Manager(name, id, email, special);
+    }
+}
+
 async function init() {
     console.log("hi")
     try {
@@ -45,8 +56,13 @@ async function init() {
                 {type: "input", message: "what it your "+ rolePrompt(p1.role), name: "special"}
             ])
             console.log(p2);
+            const newEmployee = creatEmployee(p1.name, p1.id, p1.email, p1.role, p2.special);
+            employeeList.push(newEmployee);
+            console.log(employeeList);
 
-        } while (flag); //do you have additional employees?
+            var p3 = await inquirer.prompt([{type:"confirm", Message:"do you have additional employees?", name:"flag"}])
+
+        } while (p3.flag); //do you have additional employees?
 
 
     } catch (err) {
