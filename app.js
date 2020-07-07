@@ -77,7 +77,7 @@ async function init() {
 
         const outfile = render(employeeList)
 
-        writeToFile(JSON.stringify(outfile))
+        writeToFile(outfile)
 
     } catch (err) {
         console.log(err);
