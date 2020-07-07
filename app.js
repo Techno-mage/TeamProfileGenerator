@@ -45,15 +45,16 @@ function creatEmployee(name, id, email, role, special){
     }
 }
 
-function writeToFile(output){
+ function writeToFile(output){
     fs.access(OUTPUT_DIR, (err)=>{
         if (err){
-            fs.mkdirSync(OUTPUT_DIR)
+             fs.mkdirSync(OUTPUT_DIR)
         }
+        fs.writeFile(outputPath, output, (err)=>{if(err) throw err})
     })
     
 
-    fs.writeFile(outputPath, output, (err)=>{if(err) throw err})
+     
 }
 
 async function init() {
