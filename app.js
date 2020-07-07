@@ -45,6 +45,17 @@ function creatEmployee(name, id, email, role, special){
     }
 }
 
+function writeToFile(output){
+    fs.access(OUTPUT_DIR, (err)=>{
+        if (err){
+            fs.mkdirSync(OUTPUT_DIR)
+        }
+    })
+    
+
+    fs.writeFile(outputPath, output, (err)=>{if(err) throw err})
+}
+
 async function init() {
     console.log("hi")
     try {
@@ -64,6 +75,9 @@ async function init() {
 
         } while (p3.flag); //do you have additional employees?
 
+        const outfile = render(employeeList)
+
+        writeToFile(JSON.stringify(outfile))
 
     } catch (err) {
         console.log(err);
