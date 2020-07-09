@@ -14,23 +14,23 @@ const render = require("./lib/htmlRenderer");
 // Write code to use inquirer to gather information about the development team members,
 // and to create objects for each team member (using the correct classes as blueprints!)
 
-var flag = false;
+
 var employeeList = [];
 var employeePrompt = [
-    { type: "input", message: "What is your Name?", name: "name" },
-    { type: "input", message: "What is your Employee Id?", name: "id" },
-    { type: "input", message: "What is your Email", name: "email" },
-    { type: "list", message: "What is your role", choices: ["Engineer", "Intern", "Manager"], name: "role"}
+    { type: "input", message: "What is your employee's Name?", name: "name" },
+    { type: "input", message: "What is your employee's Id?", name: "id" },
+    { type: "input", message: "What is your employee's Email", name: "email" },
+    { type: "list", message: "What is your employee's job title.", choices: ["Engineer", "Intern", "Manager"], name: "role"}
 ]
 function rolePrompt(role){
-    var item;
+    
     switch(role){
         case "Engineer":
-            return "github";
+            return "What is your engineers github username?";
         case "Intern":
-            return "school";
+            return "What is you the name of your intern's school?";
         case "Manager":
-            return "officeNumber";
+            return "What is your manager's officeNumber?";
     }
 }
 
@@ -58,21 +58,19 @@ function creatEmployee(name, id, email, role, special){
 }
 
 async function init() {
-    console.log("hi")
     try {
         do {
             var p1 = await inquirer.prompt(employeePrompt);
-            console.log(p1);
-
+            
             var p2 = await inquirer.prompt([
-                {type: "input", message: "what it your "+ rolePrompt(p1.role), name: "special"}
+                {type: "input", message: rolePrompt(p1.role), name: "special"}
             ])
-            console.log(p2);
+            
             const newEmployee = creatEmployee(p1.name, p1.id, p1.email, p1.role, p2.special);
             employeeList.push(newEmployee);
-            console.log(employeeList);
+            
 
-            var p3 = await inquirer.prompt([{type:"confirm", Message:"do you have additional employees?", name:"flag"}])
+            var p3 = await inquirer.prompt([{type:"confirm", message:"do you have additional employees?", name:"flag"}])
 
         } while (p3.flag); //do you have additional employees?
 
